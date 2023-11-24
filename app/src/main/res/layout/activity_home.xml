@@ -39,25 +39,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.191" />
 
-    <WebView
-        android:id="@+id/web_view_youtube"
-        android:layout_width="396dp"
-        android:layout_height="339dp"
+    <!--    <WebView-->
+    <!--        android:id="@+id/web_view_youtube"-->
+    <!--        android:layout_width="396dp"-->
+    <!--        android:layout_height="339dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/recycler_view_trending_videos" />-->
+
+    <!--    <androidx.media3.ui.PlayerView-->
+    <!--        android:id="@+id/playerView"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/recycler_view_trending_videos"-->
+    <!--        app:layout_constraintVertical_bias="0.5"/>-->
+
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youtube_player_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view_trending_videos" />
-
-<!--    <androidx.media3.ui.PlayerView-->
-<!--        android:id="@+id/playerView"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/recycler_view_trending_videos"-->
-<!--        app:layout_constraintVertical_bias="0.5"/>-->
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_trending_videos"
+        app:layout_constraintVertical_bias="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,27 +2,28 @@ package com.example.youtubepoc.views
 
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebChromeClient
-import android.webkit.WebViewClient
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.youtubepoc.databinding.ActivityHomeBinding
 import com.example.youtubepoc.models.Common
 import com.example.youtubepoc.models.ResponseCodes
-import com.example.youtubepoc.models.YoutubeApi
 import com.example.youtubepoc.models.YoutubeVideo
 import com.example.youtubepoc.viewModels.HomeActivityViewModel
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var viewModel: HomeActivityViewModel
     private var listOfTrendingVideos = ArrayList<YoutubeVideo>()
+    private lateinit var ytPlayer: YouTubePlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +40,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         val adapter: CustomVideoListAdapter = CustomVideoListAdapter(listOfTrendingVideos, {
-            binding.webViewYoutube.loadData(YoutubeApi.getJsYoutubeFrame(it), "text/html", "utf-8")
+//            binding.webViewYoutube.loadData(YoutubeApi.getJsYoutubeFrame(it), "text/html", "utf-8")
+            ytPlayer.loadVideo(it, 0f);
         })
 
         binding.recyclerViewTrendingVideos.adapter = adapter
@@ -73,8 +75,8 @@ class HomeActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
         })
 
-        binding.webViewYoutube.settings.javaScriptEnabled = true
-        binding.webViewYoutube.webChromeClient = WebChromeClient()
+//        binding.webViewYoutube.settings.javaScriptEnabled = true
+//        binding.webViewYoutube.webChromeClient = WebChromeClient()
 
 //        val player = ExoPlayer.Builder(applicationContext).build()
 //        binding.playerView.player = player
@@ -82,5 +84,14 @@ class HomeActivity : AppCompatActivity() {
 //        player.setMediaItem(mediaItem)
 //        player.prepare()
 //        player.play()
+
+        lifecycle.addObserver(binding.youtubePlayerView)
+        binding.youtubePlayerView.addYouTubePlayerListener(object :
+            AbstractYouTubePlayerListener() {
+            override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
+                ytPlayer = youTubePlayer
+            }
+        });
+
     }
 }

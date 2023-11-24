@@ -27,6 +27,10 @@ object YoutubeApi {
     fun getJsYoutubeFrame(videoId: String): String {
         val JS_YOUTUBE_FRAME = "<!DOCTYPE html>\n" +
                 "<html>\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <meta name=\"referrer\" content=\"strict-origin-when-cross-origin\"></head>\n" +
                 "  <body>\n" +
                 "    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->\n" +
                 "    <div id=\"player\"></div>\n" +
@@ -47,14 +51,17 @@ object YoutubeApi {
                 "          height: '300',\n" +
                 "          width: '380',\n" +
                 "          videoId: '${videoId}',\n" +
+                "          host: 'https://www.youtube.com',\n" +
                 "          playerVars: {\n" +
-                "            'playsinline': 1\n" +
+                "            'autoplay': 1,\n" +
+                "            'playsinline': 1,\n" +
+                "            'enablejsapi': 0,\n" +
+                "            'origin': 'https://www.youtube.com',\n" +
                 "          },\n" +
                 "          events: {\n" +
                 "            'onReady': onPlayerReady,\n" +
                 "            'onStateChange': onPlayerStateChange\n" +
                 "          },\n" +
-                "          referrerPolicy: 'strict-origin-when-cross-origin'\n"+
                 "        });\n" +
                 "      }\n" +
                 "\n" +
@@ -80,5 +87,6 @@ object YoutubeApi {
                 "  </body>\n" +
                 "</html>"
         return JS_YOUTUBE_FRAME
+
     }
 }
