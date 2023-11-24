@@ -45,7 +45,7 @@ object YoutubeApi {
                 "      function onYouTubeIframeAPIReady() {\n" +
                 "        player = new YT.Player('player', {\n" +
                 "          height: '300',\n" +
-                "          width: '320',\n" +
+                "          width: '380',\n" +
                 "          videoId: '${videoId}',\n" +
                 "          playerVars: {\n" +
                 "            'playsinline': 1\n" +
@@ -53,7 +53,8 @@ object YoutubeApi {
                 "          events: {\n" +
                 "            'onReady': onPlayerReady,\n" +
                 "            'onStateChange': onPlayerStateChange\n" +
-                "          }\n" +
+                "          },\n" +
+                "          referrerPolicy: 'strict-origin-when-cross-origin'\n"+
                 "        });\n" +
                 "      }\n" +
                 "\n" +

@@ -33,6 +33,7 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
                     .setChart("mostPopular")
                     .setOauthToken(YoutubeApi.getCredential().token)
                     .setRegionCode("IN")
+                    .setMaxResults(20)
                     .execute()
             val trendingVideos = result.items
             for (video in trendingVideos) {
