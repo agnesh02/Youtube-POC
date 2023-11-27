@@ -1,11 +1,13 @@
-package com.example.youtubepoc.views
+package com.example.youtubepoc.views.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
 import com.example.youtubepoc.R
 import com.example.youtubepoc.models.YoutubeVideo
 
@@ -13,7 +15,7 @@ class CustomVideoListAdapter(
     private val listOfVideos: ArrayList<YoutubeVideo>,
     private val onItemClicked: (String) -> Unit
 ) :
-    RecyclerView.Adapter<MyViewHolder>() {
+    RecyclerView.Adapter<CustomVideoListAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view: View =
@@ -33,11 +35,18 @@ class CustomVideoListAdapter(
         holder.videoTitle.setOnClickListener {
             onItemClicked(video.id)
         }
+        Glide.with(holder.itemView)
+            .load(video.thumbnail)
+            .placeholder(R.drawable.multimedia) // Placeholder image resource
+            .error(R.drawable.baseline_error_outline_24)           // Error image resource
+            .into(holder.videoThumbnail)
+    }
+
+    class MyViewHolder(itemView: View) : ViewHolder(itemView) {
+        val videoTitle: TextView = itemView.findViewById(R.id.tv_video_title);
+        val videoViews: TextView = itemView.findViewById(R.id.tv_video_views);
+        val videoLikes: TextView = itemView.findViewById(R.id.tv_video_likes);
+        val videoThumbnail: ImageView = itemView.findViewById(R.id.video_thumbnail);
     }
 }
 
-class MyViewHolder(itemView: View) : ViewHolder(itemView) {
-    val videoTitle: TextView = itemView.findViewById(R.id.tv_video_title);
-    val videoViews: TextView = itemView.findViewById(R.id.tv_video_views);
-    val videoLikes: TextView = itemView.findViewById(R.id.tv_video_likes);
-}

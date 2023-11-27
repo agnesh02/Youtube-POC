@@ -1,43 +1,38 @@
-package com.example.youtubepoc.views
+package com.example.youtubepoc.views.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.NonNull
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.youtubepoc.databinding.ActivityHomeBinding
-import com.example.youtubepoc.models.Common
+import com.example.youtubepoc.databinding.FragmentTrendingBinding
 import com.example.youtubepoc.models.ResponseCodes
 import com.example.youtubepoc.models.YoutubeVideo
 import com.example.youtubepoc.viewModels.HomeActivityViewModel
+import com.example.youtubepoc.views.adapters.CustomVideoListAdapter
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
+class TrendingFragment : Fragment() {
 
-class HomeActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityHomeBinding
+    private lateinit var binding: FragmentTrendingBinding
     private lateinit var viewModel: HomeActivityViewModel
     private var listOfTrendingVideos = ArrayList<YoutubeVideo>()
     private lateinit var ytPlayer: YouTubePlayer
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = FragmentTrendingBinding.inflate(layoutInflater)
 
-        viewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
-
-        val bundle = this.intent.extras
-        if (bundle != null) {
-            val name = bundle.getString("NAME")
-            Common.showToast(this, name.toString())
-        }
+        viewModel = ViewModelProvider(requireActivity()).get(HomeActivityViewModel::class.java)
 
         val adapter: CustomVideoListAdapter = CustomVideoListAdapter(listOfTrendingVideos, {
 //            binding.webViewYoutube.loadData(YoutubeApi.getJsYoutubeFrame(it), "text/html", "utf-8")
@@ -45,10 +40,10 @@ class HomeActivity : AppCompatActivity() {
         })
 
         binding.recyclerViewTrendingVideos.adapter = adapter
-        binding.recyclerViewTrendingVideos.layoutManager = LinearLayoutManager(applicationContext)
+        binding.recyclerViewTrendingVideos.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTrendingVideos.addItemDecoration(
             DividerItemDecoration(
-                applicationContext,
+                requireContext(),
                 LinearLayoutManager.VERTICAL
             )
         )
@@ -59,7 +54,7 @@ class HomeActivity : AppCompatActivity() {
 //            viewModel.getUserSubscriptions()
         }
 
-        viewModel.trendingVideosStatus.observe(this, Observer {
+        viewModel.trendingVideosStatus.observe(viewLifecycleOwner, Observer {
             if (it == ResponseCodes.REQUEST_ATTEMPT) {
                 binding.btnGetTrending.isEnabled = false
                 binding.progressBarTrendingVideos.visibility = View.VISIBLE
@@ -69,7 +64,7 @@ class HomeActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.trendingVideosInfo.observe(this, Observer {
+        viewModel.trendingVideosInfo.observe(viewLifecycleOwner, Observer {
             listOfTrendingVideos.clear()
             listOfTrendingVideos.addAll(it)
             adapter.notifyDataSetChanged()
@@ -93,5 +88,7 @@ class HomeActivity : AppCompatActivity() {
             }
         });
 
+
+        return binding.root
     }
 }

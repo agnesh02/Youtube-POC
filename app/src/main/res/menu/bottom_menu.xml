@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_trending"
+        android:icon="@drawable/trending"
+        android:title="Trending"></item>
+
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/find"
+        android:title="Search"></item>
+
+    <item
+        android:id="@+id/menu_subscription"
+        android:icon="@drawable/common_full_open_on_phone"
+        android:title="Subscription"></item>
+
+</menu>

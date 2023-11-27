@@ -1,4 +1,4 @@
-package com.example.youtubepoc
+package com.example.youtubepoc.views.activities
 
 import android.accounts.AccountManager
 import android.app.Activity
@@ -11,11 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.youtubepoc.databinding.ActivityMainBinding
-import com.example.youtubepoc.models.Common
 import com.example.youtubepoc.models.ResponseCodes
 import com.example.youtubepoc.models.YoutubeApi
 import com.example.youtubepoc.viewModels.MainActivityViewModel
-import com.example.youtubepoc.views.HomeActivity
 import com.google.android.gms.common.GoogleApiAvailability
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.youtubepoc.models.ResponseCodes
 import com.example.youtubepoc.models.YoutubeApi
+import com.example.youtubepoc.models.YoutubeSearchResult
 import com.example.youtubepoc.models.YoutubeVideo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +17,8 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
     val trendingVideosInfo = MutableLiveData<ArrayList<YoutubeVideo>>()
     val trendingVideosStatus = MutableLiveData<ResponseCodes>()
 
-    val currentVideoId = MutableLiveData("")
+    val searchResultsInfo = MutableLiveData<ArrayList<YoutubeSearchResult>>()
+    val searchResultsStatus = MutableLiveData<ResponseCodes>()
 
     fun getTrendingVideos() {
 
@@ -43,7 +45,8 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
                     video.id,
                     video.snippet.title,
                     video.statistics.viewCount,
-                    video.statistics.likeCount
+                    video.statistics.likeCount,
+                    video.snippet.thumbnails.default.url
                 )
                 trendingVideosResult.add(videoObj)
             }
@@ -55,6 +58,43 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
 
             for (result in trendingVideosResult) {
                 Log.i("TRENDING VIDEO: ", result.toString())
+            }
+        }
+    }
+
+    fun getSearchResults(query: String) {
+        val searchResultsResult = ArrayList<YoutubeSearchResult>()
+
+        viewModelScope.launch(Dispatchers.Main) {
+            searchResultsInfo.value = arrayListOf()
+            searchResultsStatus.value = ResponseCodes.REQUEST_ATTEMPT
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val result =
+                YoutubeApi.getYoutubeService().search().list("snippet").setQ(query)
+                    .setRegionCode("IN")
+                    .setOauthToken(YoutubeApi.getCredential().token)
+                    .setMaxResults(20).execute()
+
+            val searchResults = result.items
+            for (video in searchResults) {
+                val videoObj = YoutubeSearchResult(
+                    video.id?.videoId.toString(),
+                    video.snippet.title,
+                    video.snippet.description,
+                    video.snippet.thumbnails.default.url
+                )
+                searchResultsResult.add(videoObj)
+            }
+
+            viewModelScope.launch(Dispatchers.Main) {
+                searchResultsInfo.value = searchResultsResult
+                searchResultsStatus.value = ResponseCodes.REQUEST_SUCCESS
+            }
+
+            for (result in searchResultsResult) {
+                Log.i("SEARCH RESULT: ", result.toString())
             }
         }
     }
