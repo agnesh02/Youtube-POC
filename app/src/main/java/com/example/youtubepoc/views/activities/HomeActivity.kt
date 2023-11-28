@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
         val bundle = this.intent.extras
         if (bundle != null) {
             val name = bundle.getString("NAME")
-            Common.showToast(this, name.toString())
+            Common.showSnackMessage(binding.root, name.toString(), true)
         }
 
         // Initializing a screen

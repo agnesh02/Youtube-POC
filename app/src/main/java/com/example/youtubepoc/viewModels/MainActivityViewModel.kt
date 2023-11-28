@@ -151,7 +151,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 )
 
                 CoroutineScope(Dispatchers.Main).launch {
-                    Common.showToast(getApplication(), "User signed in successfully !!")
                     isUserAuthenticated.value = true
                 }
 

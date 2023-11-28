@@ -37,7 +37,7 @@ class SearchFragment : Fragment() {
 
         val adapter = CustomSearchResultAdapter(listOfSearchResult) {
             if (it == "null") {
-                Common.showToast(requireActivity(), "Cannot play this content as this is not a video")
+                Common.showSnackMessage(binding.root, "Cannot play this content as this is not a video", true)
             } else {
                 ytPlayer.loadVideo(it, 0f);
             }

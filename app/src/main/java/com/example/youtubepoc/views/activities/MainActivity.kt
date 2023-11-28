@@ -2,8 +2,10 @@ package com.example.youtubepoc.views.activities
 
 import android.accounts.AccountManager
 import android.app.Activity
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -11,11 +13,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.youtubepoc.databinding.ActivityMainBinding
+import com.example.youtubepoc.models.Common
 import com.example.youtubepoc.models.ResponseCodes
 import com.example.youtubepoc.models.YoutubeApi
 import com.example.youtubepoc.viewModels.MainActivityViewModel
 import com.google.android.gms.common.GoogleApiAvailability
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -93,9 +97,13 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isUserAuthenticated.observe(this, Observer {
             if (it) {
+                Common.showSnackMessage(binding.root, "User signed in successfully !!", false)
                 val i: Intent = Intent(this, HomeActivity::class.java)
                 i.putExtra("NAME",YoutubeApi.getCredential().selectedAccountName)
-                startActivity(i)
+                lifecycleScope.launch {
+                    delay(1000)
+                    startActivity(i)
+                }
             }
         })
     }

@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/menu_subscription"
-        android:icon="@drawable/common_full_open_on_phone"
+        android:icon="@drawable/subscribe"
         android:title="Subscription"></item>
 
 </menu>

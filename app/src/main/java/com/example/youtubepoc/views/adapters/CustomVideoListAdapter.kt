@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.youtubepoc.R
 import com.example.youtubepoc.models.YoutubeVideo
+import java.time.Duration
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class CustomVideoListAdapter(
     private val listOfVideos: ArrayList<YoutubeVideo>,
@@ -32,7 +35,12 @@ class CustomVideoListAdapter(
         holder.videoTitle.text = video.title
         holder.videoViews.text = "${video.viewCount} views"
         holder.videoLikes.text = "${video.likeCount} likes"
-        holder.videoTitle.setOnClickListener {
+        val duration = Duration.parse(video.duration)
+        val startTime = LocalTime.of(0, 0).plus(duration)
+        val formatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+        val formattedTime = startTime.format(formatter)
+        holder.videoDuration.text = formattedTime
+        holder.itemView.setOnClickListener {
             onItemClicked(video.id)
         }
         Glide.with(holder.itemView)
@@ -46,6 +54,7 @@ class CustomVideoListAdapter(
         val videoTitle: TextView = itemView.findViewById(R.id.tv_video_title);
         val videoViews: TextView = itemView.findViewById(R.id.tv_video_views);
         val videoLikes: TextView = itemView.findViewById(R.id.tv_video_likes);
+        val videoDuration: TextView = itemView.findViewById(R.id.tv_video_duration);
         val videoThumbnail: ImageView = itemView.findViewById(R.id.video_thumbnail);
     }
 }

@@ -9,41 +9,42 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.youtubepoc.R
 import com.example.youtubepoc.models.YoutubeSearchResult
+import com.example.youtubepoc.models.YoutubeSubscriptionDetails
 
-class CustomSearchResultAdapter(
-    private val listOfVideos: ArrayList<YoutubeSearchResult>,
+class CustomSubscriptionDetailAdapter(
+    private val listOfSubscriptions: ArrayList<YoutubeSubscriptionDetails>,
     private val onItemClicked: (String) -> Unit
 ) :
-    RecyclerView.Adapter<CustomSearchResultAdapter.MyViewHolder>() {
+    RecyclerView.Adapter<CustomSubscriptionDetailAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.custom_search_list, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.custom_subscription_list, parent, false)
         return MyViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return this.listOfVideos.size
+        return this.listOfSubscriptions.size
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val result = listOfVideos[position]
-        holder.resultTitle.text = result.title
-        holder.resultDescription.text = result.description
+        val subscription = listOfSubscriptions[position]
+        holder.subscriptionTitle.text = subscription.title
+        holder.subscriptionDescription.text = subscription.description
         holder.itemView.setOnClickListener {
-            onItemClicked(result.id)
+            onItemClicked(subscription.id)
         }
         Glide.with(holder.itemView)
-            .load(result.thumbnail)
+            .load(subscription.thumbnail)
             .placeholder(R.drawable.multimedia) // Placeholder image resource
             .error(R.drawable.baseline_error_outline_24)           // Error image resource
-            .into(holder.resultThumbnail)
+            .into(holder.subscriptionThumbnail)
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val resultTitle: TextView = itemView.findViewById(R.id.tv_result_title);
-        val resultDescription: TextView = itemView.findViewById(R.id.tv_result_description);
-        val resultThumbnail: ImageView = itemView.findViewById(R.id.result_thumbnail);
+        val subscriptionTitle: TextView = itemView.findViewById(R.id.tv_subscription_title);
+        val subscriptionDescription: TextView = itemView.findViewById(R.id.tv_subscription_description);
+        val subscriptionThumbnail: ImageView = itemView.findViewById(R.id.subscription_thumbnail);
     }
 }
 

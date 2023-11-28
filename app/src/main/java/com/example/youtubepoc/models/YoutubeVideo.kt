@@ -7,5 +7,6 @@ data class YoutubeVideo(
     val title:String,
     val viewCount: BigInteger,
     val likeCount: BigInteger,
+    val duration: String,
     val thumbnail: String
 )

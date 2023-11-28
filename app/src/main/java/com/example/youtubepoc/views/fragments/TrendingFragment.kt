@@ -50,8 +50,6 @@ class TrendingFragment : Fragment() {
 
         binding.btnGetTrending.setOnClickListener {
             viewModel.getTrendingVideos()
-//            viewModel.getChannelInfo()
-//            viewModel.getUserSubscriptions()
         }
 
         viewModel.trendingVideosStatus.observe(viewLifecycleOwner, Observer {
