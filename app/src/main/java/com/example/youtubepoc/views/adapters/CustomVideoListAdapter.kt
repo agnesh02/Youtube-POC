@@ -1,5 +1,6 @@
 package com.example.youtubepoc.views.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,12 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.youtubepoc.R
 import com.example.youtubepoc.models.YoutubeVideo
+import com.yausername.youtubedl_android.YoutubeDL.getInstance
+import com.yausername.youtubedl_android.YoutubeDLException
 import java.time.Duration
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+
 
 class CustomVideoListAdapter(
     private val listOfVideos: ArrayList<YoutubeVideo>,
@@ -48,6 +52,9 @@ class CustomVideoListAdapter(
             .placeholder(R.drawable.multimedia) // Placeholder image resource
             .error(R.drawable.baseline_error_outline_24)           // Error image resource
             .into(holder.videoThumbnail)
+        holder.videoAudioDownload.setOnClickListener {
+            Log.d("AGNESH","clicked")
+        }
     }
 
     class MyViewHolder(itemView: View) : ViewHolder(itemView) {
@@ -56,6 +63,7 @@ class CustomVideoListAdapter(
         val videoLikes: TextView = itemView.findViewById(R.id.tv_video_likes);
         val videoDuration: TextView = itemView.findViewById(R.id.tv_video_duration);
         val videoThumbnail: ImageView = itemView.findViewById(R.id.video_thumbnail);
+        val videoAudioDownload: TextView = itemView.findViewById(R.id.tv_download_audio);
     }
 }
 

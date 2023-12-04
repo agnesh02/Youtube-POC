@@ -49,10 +49,10 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
                 val videoObj = YoutubeVideo(
                     video.id,
                     video.snippet.title,
-                    video.statistics.viewCount,
-                    video.statistics.likeCount,
-                    video.contentDetails.duration,
-                    video.snippet.thumbnails.default.url
+                    video.statistics?.viewCount,
+                    video.statistics?.likeCount,
+                    video.contentDetails?.duration.toString(),
+                    video.snippet.thumbnails.default.url,
                 )
                 trendingVideosResult.add(videoObj)
             }

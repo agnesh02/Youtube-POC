@@ -92,6 +92,13 @@
                             android:textSize="14sp" />
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/tv_download_audio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Download MP3"
+                        android:textColor="#001EDF" />
+
                 </LinearLayout>
 
                 <LinearLayout
