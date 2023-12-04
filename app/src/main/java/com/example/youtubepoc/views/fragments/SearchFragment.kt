@@ -40,6 +40,7 @@ class SearchFragment : Fragment() {
                 Common.showSnackMessage(binding.root, "Cannot play this content as this is not a video", true)
             } else {
                 ytPlayer.loadVideo(it, 0f);
+                binding.youtubePlayerViewSearch.visibility = View.GONE
             }
         }
 

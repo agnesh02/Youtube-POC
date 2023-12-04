@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter
 
 class CustomVideoListAdapter(
     private val listOfVideos: ArrayList<YoutubeVideo>,
-    private val onItemClicked: (String) -> Unit
+    private val onItemClicked: (YoutubeVideo) -> Unit
 ) :
     RecyclerView.Adapter<CustomVideoListAdapter.MyViewHolder>() {
 
@@ -41,7 +41,7 @@ class CustomVideoListAdapter(
         val formattedTime = startTime.format(formatter)
         holder.videoDuration.text = formattedTime
         holder.itemView.setOnClickListener {
-            onItemClicked(video.id)
+            onItemClicked(video)
         }
         Glide.with(holder.itemView)
             .load(video.thumbnail)
